@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <title>Регистрация</title>
+</head>
+
+<body>
+    <main>
+        <div class="circle"></div>
+        <div class="register-form-container">
+            <h1 class="form-title">Регистрация</h1>
+            <div class="form-fields">
+                <form action="/reg" method="post">
+                    <div class="form-field">
+                        <input name="name" placeholder="Имя">
+                    </div>
+                    <div class="form-field">
+                        <input name="email" placeholder="Почта">
+                    </div>
+                    <div class="form-field">
+                        <input name="password" placeholder="Пароль">
+                    </div>
+                    <div class="form-field">
+                        <input name="confirm_password" placeholder="Подтвердить пароль">
+                    </div>
+
+                    <input type="submit" value="Send">Регистрация</input
+                </form>
+            </div>
+            <div class="form-buttons">
+                <button class="button" type="submit" value="Send">Регистрация</button>
+                <div class="divider">или</div>
+                <a href="index2.html" class="button button-google">Уже имеете аккаунт?</a>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
