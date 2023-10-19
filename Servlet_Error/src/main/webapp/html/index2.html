@@ -18,21 +18,23 @@
                 Авторизация
             </h1>
             <div class="form-fields">
-                <form action="/aut" method="post">
+                <form action="/aut" method="get">
                     <div class="form-field">
-                        <input name="email" placeholder="Почта">
+                        <input name="email" placeholder="Почта" style="color: black">
                     </div>
                     <div class="form-field">
-                        <input name="password" placeholder="Пароль">
+                        <input name="password" placeholder="Пароль" style="color: black">
                     </div>
 
-                    <input type="submit" value="Send">Войти</input
+                    <div class="form-field">
+                        <input class="button" type="submit" value="Send">
+                    </div>
+
                 </form>
             </div>
             <div class="form-buttons">
-                <a href="index3.html" class="button">Войти</a>
                 <div class="divider">или если не зарегистрированы</div>
-                <a href="index.html" class="button button-google">Регистрироваться</a>
+                <a href="/aut" class="button button-google">Регистрироваться</a>
             </div>
         </div>
     </main>

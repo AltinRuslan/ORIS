@@ -1,6 +1,9 @@
-package models;
+package servlets;
 
 
+
+import repository.UsersRepository;
+import repository.UsersRepositoryJdbcImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,13 +21,12 @@ import java.util.List;
 public class UsersServlets extends HttpServlet {
 
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "gjhfqr102";
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/testdb";
+    private static final String DB_PASSWORD = "adidas19375";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/db_users_oris";
 
     private UsersRepository usersRepository;
 
 
-//    private List<User> users;
     @Override
     public void init() throws ServletException {
 
@@ -37,7 +39,7 @@ public class UsersServlets extends HttpServlet {
         try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            usersRepository = new UsersRepositoryJdbcImpl(connection, statement);
+            usersRepository = new UsersRepositoryJdbcImpl(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -101,8 +103,10 @@ public class UsersServlets extends HttpServlet {
 //
 //                writer.write(resultHtml.toString());
         List result = null;
-        result = usersRepository.findAllByAge();
+        result = usersRepository.allUsers();
+        System.out.println(!result.isEmpty());
+
         request.setAttribute("usersForJsp", result);
-        request.getRequestDispatcher("/jsp/users.jsp").forward(request, response);
+        request.getRequestDispatcher("/users.jsp").forward(request, response);
     }
 }
