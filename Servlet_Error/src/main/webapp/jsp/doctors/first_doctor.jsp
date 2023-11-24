@@ -56,7 +56,7 @@
       </div>
 
       <div class="save profile-page__name">
-        <a href="../record.jsp" class="button" style="font-size: 30px; color: #405d87; text-decoration: none;">
+        <a href="/rec" class="button" style="font-size: 30px; color: #405d87; text-decoration: none;">
           <h3 style="margin-top: 20px">Записаться на прием</h3>
         </a>
       </div>

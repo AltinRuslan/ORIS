@@ -41,25 +41,27 @@
 
     <div class="main__recorder-page">
       <div class="recorder-page">
-        <input class="profile-page__name" type="text" placeholder="ФИО пациента" style="color: black;">
-        <div class="doctors profile-page__name">
-          <select id="targetCurrency">
-            <option value="USD">Ишмаматов Алмаз Ишмаматович</option>
-            <option value="EUR">Абдуллоев Жавахир Джахангирович</option>
-            <option value="GBP">Хаматова Лиана</option>
-            <option value="KZT">Вероника Ксения</option>
-            <option value="AUD">Нурмиев Рафаэль</option>
-          </select>
-        </div>
-        <input class="profile-page__name" type="date" placeholder="Дата" style="color: black;">
-        <input class="profile-page__name" type="time" placeholder="Время" style="color: black;">
-        <input class="profile-page__name" type="text" placeholder="Email" style="color: black;">
+        <form action="/rec" method="post">
+          <input class="profile-page__name" type="text" name="userName" placeholder="ФИО пациента" style="color: black;">
+          <div class="doctors profile-page__name">
+            <select id="targetCurrency" name="doctorName">
+              <option>ishamatov almaz</option>
+              <option>Абдуллоев Жавахир Джахангирович</option>
+              <option>Хаматова Лиана</option>
+              <option>Вероника Ксения</option>
+              <option>Нурмиев Рафаэль</option>
+            </select>
+          </div>
+          <input class="profile-page__name" type="date" name="date" placeholder="Дата" style="color: black;">
+          <input class="profile-page__name" type="time" name="time" placeholder="Время" style="color: black;">
+          <input class="profile-page__name" type="text" name="email"  placeholder="Email" style="color: black;">
 
         <div class="save profile-page__name">
           <a href="#" class="button" style="font-size: 30px; color: #405d87; text-decoration: none;">
-            <h3 style="margin-top: 20px">Записаться</h3>
+            <input style="margin-top: 20px" class="button" type="submit" value="Send" placeholder="Записаться">
           </a>
         </div>
+        </form>
         <h4 class="some-info">Записаться на консультацию можно по телефону 8(953)481-17-45 или 8(8553)35-17-45</h4>
       </div>
     </div>

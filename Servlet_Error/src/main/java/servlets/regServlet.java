@@ -47,19 +47,17 @@ public class regServlet extends HttpServlet {
         String password = request.getParameter("password");
         String lastPassword = request.getParameter("confirm_password");
 
-        System.out.println(firstName);
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(lastPassword);
+//        System.out.println(firstName);
+//        System.out.println(email);
+//        System.out.println(password);
+//        System.out.println(lastPassword);
 
         try(Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             Statement statement = connection.createStatement();
             String unUUID = UUID.randomUUID().toString();
-            String sqlInsertUser = "insert into driver(first_name, email, password)" +
-                    " values ('" + firstName + "', '" + email + "', '" + password + "');";
-
-            System.out.println(sqlInsertUser);
-
+            String sqlInsertUser = "insert into driver(first_name, email, password, role)" +
+                    " values ('" + firstName + "', '" + email + "', '" + password + "', '" + "User" + "');";
+//            System.out.println(sqlInsertUser);
             int affectedRows = statement.executeUpdate(sqlInsertUser);
 
             PrintWriter printWriter = response.getWriter();

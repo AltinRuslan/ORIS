@@ -3,13 +3,10 @@ package repository;
 
 
 
+import models.Doctor;
 import models.User;
-import repository.UsersRepository;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
     private static final String SQL_SELECT_ALL_FROM_DRIVER = "select * from driver";
     private static final String SQL_SELECT_ALL_FROM_UUID = "select * from uuid";
-    private static final String SQL_INSERT_INTO_USERS = "insert into driver(login,password,first_name,last_name) values ";
+    private static final String SQL_SELECT_ALL_FROM_DOCTORS = "select * from doctors";
 
 
     public UsersRepositoryJdbcImpl(Connection connection) {
@@ -145,6 +142,52 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                 }
             }
             return result;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Override
+    public String findDoctorByName(String doctorName) {
+        String idDoctor = null;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DOCTORS);
+            while (resultSet.next()) {
+                Doctor doctor = Doctor.builder()
+                        .id(resultSet.getString("id"))
+                        .name(resultSet.getString("name"))
+                        .build();
+                if (doctor.getName().equals(doctorName)){
+                    idDoctor = doctor.getId();
+                } else {
+                    return "Пользователя нет";
+                }
+            }
+            return idDoctor;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Override
+    public String findUserByName(String name) {
+        String idUser = null;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DRIVER);
+            while (resultSet.next()) {
+                User user = User.builder()
+                        .id(resultSet.getString("id"))
+                        .name(resultSet.getString("first_name"))
+                        .build();
+                if (user.getName().equals(name)){
+                    idUser = user.getId();
+                } else {
+                    return "Пользователя нет";
+                }
+            }
+            return idUser;
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
