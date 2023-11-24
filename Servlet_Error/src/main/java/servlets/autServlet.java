@@ -5,16 +5,17 @@ import repository.UsersRepositoryJdbcImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 
@@ -45,31 +46,40 @@ public class autServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Cookie[] cookies = request.getCookies();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        System.out.println(email);
 
-        PrintWriter writer = response.getWriter();
+        
 
         if(usersRepository.findUser(email, password)) {
-            writer.println("<h1>Log In</h1>");
+            System.out.println(email + " Он смог " + password);
+
+            HttpSession session = request.getSession(true);
+            session.setAttribute("authenticated", true);
+//            session.setAttribute("isAMainPage", true);
+
+            System.out.println("Он видит, что пользователь есть");
+            response.sendRedirect("/main_page");
         } else {
-            writer.println("<h1>Failed</h1>");
+            System.out.println(email + " Он не смог " + password);
+            response.sendRedirect("/reg");
         }
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getCookies() == null) {
+        if (request.getCookies() == null || getUUID(request.getCookies()) != null) {
+            System.out.println("Не нашел куки");
             request.getRequestDispatcher("/html/index2.html").forward(request, response);
         } else {
             Cookie[] cookies = request.getCookies();
-            String userName = usersRepository.findIdByUUID(getUUID(cookies));
-
-            if(!userName.equals("0")) {
-                System.out.println("В profile.html пошел");
-                request.getRequestDispatcher("profile.html").forward(request, response);
-            } else {
-                System.out.println("В index2.html пошел");
+            if(getUUID(request.getCookies()) != null) {
+                String userName = usersRepository.findIdByUUID(getUUID(cookies));
+                if(!userName.equals("0")) {
+                    request.getRequestDispatcher("/html/index2.html").forward(request, response);
+                }
+            }
+            else {
                 request.getRequestDispatcher("/html/index2.html").forward(request, response);
             }
         }

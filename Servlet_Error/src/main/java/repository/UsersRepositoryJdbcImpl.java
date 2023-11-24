@@ -88,7 +88,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
             User copy = null;
 
-
             while (resultSet.next()) {
 
                 User user = User.builder()
@@ -101,8 +100,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                 }
             }
             System.out.println(copy);
-
-
 
             while (resultSet1.next()) {
                 System.out.println(resultSet1.getString("id"));

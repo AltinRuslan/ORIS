@@ -5,17 +5,14 @@ import repository.UsersRepositoryJdbcImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.UUID;
 
 
-@WebServlet("")
+@WebServlet("/reg")
 public class regServlet extends HttpServlet {
 
     private static final String DB_USER = "postgres";
@@ -68,15 +65,19 @@ public class regServlet extends HttpServlet {
             PrintWriter printWriter = response.getWriter();
 
             if(affectedRows > 0 && !password.isEmpty() && !firstName.isEmpty() && !email.isEmpty() && password.equals(lastPassword)) {
+
                 Cookie cookies = new Cookie("id", unUUID);
                 response.addCookie(cookies);
 
                 String sqlInsertUserUUID = "insert into uuid(uuid)" +
                         " values ('" + unUUID + "');";
                 statement.executeUpdate(sqlInsertUserUUID);
-                
+
+                HttpSession session = request.getSession(true);
+                session.setAttribute("authenticated", true);
+
                 cookies.setMaxAge(3600 * 24);
-                printWriter.println("<h1>reg well</h1>");
+                response.sendRedirect("/main_page");
             } else {
                 printWriter.println("<h1>reg failed</h1>");
             }
