@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+    <title>Страница админа</title>
+</head>
+
+<body>
+<main>
+    <div class="circle"></div>
+    <div class="register-form-container">
+        <div class="profile-form-container">
+            <div class="profile-container__name">
+                <h1>Admin</h1>
+            </div>
+            <div class="container__buttons">
+                <div class="profile-container__exit profile-button">
+                    <h4><a href="#" class="profile-button__used">Выйти</a></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="all-admins">
+            <h2>Администраторы</h2>
+        </div>
+
+        <div class="all-page">
+            <div class="admins">
+                <div class="all-admins__content">
+                    <div class="all-admins__info">
+                        <div class="all-admins__name">
+                            <h3>Имя: Ruslan Altynbaev</h3>
+                        </div>
+                        <div class="all-admins__email">
+                            <h3>Почта: ruslan@gmail.com</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="all-admins__content">
+                    <div class="all-admins__info">
+                        <div class="all-admins__name">
+                            <h3>Имя: Ruslan Altynbaev</h3>
+                        </div>
+                        <div class="all-admins__email">
+                            <h3>Почта: ruslan@gmail.com</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="all-admins__content">
+                    <div class="all-admins__info">
+                        <div class="all-admins__name">
+                            <h3>Имя: Ruslan Altynbaev</h3>
+                        </div>
+                        <div class="all-admins__email">
+                            <h3>Почта: ruslan@gmail.com</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-admin">
+                <div class="add-admin__name">
+                    <h1>Добавить администратора</h1>
+                </div>
+
+                <div class="add-admin__content">
+                    <form action="/admin" method="post">
+                        <div class="add-admin__info">
+                            <div class="add-admin__name">
+                                <h3>Имя: </h3>
+                                <input type="text" placeholder="ФИО" name="fullName">
+                            </div>
+                            <div class="add-admin__email">
+                                <h3>Почта: </h3>
+                                <input type="text" placeholder="Почта" name="email">
+                            </div>
+                        </div>
+                        <div class="save profile-page__name">
+                            <a href="admin.html" class="button" style="font-size: 30px; color: #405d87; text-decoration: none; margin-left: 20px">
+                                <input style="margin-top: 20px; color: black" class="button" type="submit" value="Send" placeholder="Добавить нового админа">
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</main>
+</body>
+
+</html>

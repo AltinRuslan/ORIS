@@ -4,8 +4,10 @@ package repository;
 
 
 import models.Doctor;
+import models.Record;
 import models.User;
 
+import javax.print.Doc;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     private static final String SQL_SELECT_ALL_FROM_DRIVER = "select * from driver";
     private static final String SQL_SELECT_ALL_FROM_UUID = "select * from uuid";
     private static final String SQL_SELECT_ALL_FROM_DOCTORS = "select * from doctors";
+    private static final String SQL_SELECT_ALL_FROM_RECORDS = "select * from record";
 
 
     public UsersRepositoryJdbcImpl(Connection connection) {
@@ -160,8 +163,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                         .build();
                 if (doctor.getName().equals(doctorName)){
                     idDoctor = doctor.getId();
-                } else {
-                    return "Пользователя нет";
                 }
             }
             return idDoctor;
@@ -169,6 +170,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             throw new IllegalStateException(e);
         }
     }
+
 
     @Override
     public String findUserByName(String name) {
@@ -183,8 +185,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                         .build();
                 if (user.getName().equals(name)){
                     idUser = user.getId();
-                } else {
-                    return "Пользователя нет";
                 }
             }
             return idUser;
@@ -192,4 +192,74 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             throw new IllegalStateException(e);
         }
     }
+
+    @Override
+    public List<Record> findAllRecords(String id) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_RECORDS);
+            List<Record> result = new ArrayList<>();
+
+
+            while (resultSet.next()) {
+                Record record = Record.builder()
+                        .idDoctor(resultSet.getString("id_doctor"))
+                        .date(resultSet.getString("date"))
+                        .time(resultSet.getString("time"))
+                        .build();
+                if (record.getIdUser().equals(id)) {
+                    result.add(record);
+                }
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Override
+    public String findDoctorById(String id) {
+        String NameDoctor = null;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DOCTORS);
+            while (resultSet.next()) {
+                Doctor doctor = Doctor.builder()
+                        .id(resultSet.getString("id"))
+                        .name(resultSet.getString("name"))
+                        .build();
+                if (doctor.getId().equals(id)){
+                    NameDoctor = doctor.getName();
+                }
+            }
+            return NameDoctor;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Override
+    public String findRoleByEmailAndPassword(String password, String email) {
+        String role = null;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DRIVER);
+            while (resultSet.next()) {
+                User user = User.builder()
+                        .email(resultSet.getString("email"))
+                        .password(resultSet.getString("password"))
+                        .role(resultSet.getString("role"))
+                        .build();
+                System.out.println(user.getRole());
+                if (user.getEmail().equals(email) && user.getPassword().equals(password)){
+                    role = user.getRole();
+                }
+            }
+            return role;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+
 }

@@ -45,11 +45,11 @@
           <input class="profile-page__name" type="text" name="userName" placeholder="ФИО пациента" style="color: black;">
           <div class="doctors profile-page__name">
             <select id="targetCurrency" name="doctorName">
-              <option>ishamatov almaz</option>
-              <option>Абдуллоев Жавахир Джахангирович</option>
-              <option>Хаматова Лиана</option>
-              <option>Вероника Ксения</option>
-              <option>Нурмиев Рафаэль</option>
+              <option>Ishamatov Almaz</option>
+              <option>Abdulloev Zhavakhir</option>
+              <option>Khamatova Liana</option>
+              <option>Veronica Ksenia</option>
+              <option>Nurmiev Rafael</option>
             </select>
           </div>
           <input class="profile-page__name" type="date" name="date" placeholder="Дата" style="color: black;">

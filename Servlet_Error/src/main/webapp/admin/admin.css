@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+input {
+    height: 45px;
+    width: 100%;
+    color: #e9f2ff;
+    font-size: 14px;
+    line-height: 16px;
+    border: 2px solid #e9f2ff;
+    border-radius: 5px;
+    padding-left: 25px;
+
+}
+input:focus {
+    outline: none;
+    border: 2px solid #c1d9fd;
+}
+main {
+    background: #f1f5fe;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@keyframes fadeCircle {
+    0% {
+        width: 2534px;
+        height: 2534px;
+    }
+    25% {
+        width: 2000px;
+        height: 2000px;
+    }
+    50% {
+        width: 1500px;
+        height: 1500px;
+    }
+    75% {
+        width: 1000px;
+        height: 1000px;
+    }
+    100% {
+        width: 650px;
+        height: 650px;
+    }
+}
+
+.register-form-container {
+    opacity: 0;
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    height: 650px;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 6px 50px rgba(87, 131, 227, 0.7);
+    border-radius: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 38px;
+    padding-bottom: 38px;
+    animation-name: fadeForm;
+    animation-duration: .7s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0.1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeForm {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: .25;
+    }
+    50% {
+        opacity: .5;
+    }
+    75% {
+        opacity: .75;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.divider {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #405d87;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+/* для main_page.html*/
+.profile-form__content {
+    margin-top:15px ;
+    height: 100%;
+
+}
+
+
+.profile-form-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container__buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-button {
+    margin-top: 15px;
+    margin-right: 30px;
+}
+
+.profile-button__used {
+    text-decoration: none;
+    transition: 1s;
+}
+
+h4 {
+    transition: 1s;
+}
+h4:hover {
+    transform: scale(1.2);
+}
+
+.avatar-img {
+    width: 200px;
+    height: 200px;
+}
+
+
+.all-info {
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.info__about-doctor {
+    margin-left: 50px;
+}
+
+.info__about-doctor__title {
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 28px;
+    color: #000000;
+    padding-top: 10px       ;
+}
+
+.info__about-doctor {
+    width: 600px;
+}
+
+.button {
+    border-radius: 15px;
+    height: 45px;
+    background-color:#e9f2ff ;
+    display: block;
+    margin: 10px;
+    justify-content: center;
+    text-align: center;
+    transition: 1s;
+}
+
+.button:hover {
+    transform: scale(1.1);
+}
+
+
+.profile-page__name {
+    width: 500px;
+    margin-right: 10px;
+}
+
+.all-admins {
+    margin-top: 20px;
+}
+
+.all-admins__content {
+
+}
+
+.admins {
+
+}
+
+.all-admins__info {
+    margin-top: 20px;
+}
+
+.all-page {
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-admin {
+    margin-right: 150px;
+}
+
+.add-admin__info {
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+

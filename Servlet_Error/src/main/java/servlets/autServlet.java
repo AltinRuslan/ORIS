@@ -49,18 +49,29 @@ public class autServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         System.out.println(email);
+//        String unUUID = UUID.randomUUID().toString();
 
         
 
         if(usersRepository.findUser(email, password)) {
-            System.out.println(email + " Он смог " + password);
+            if (usersRepository.findRoleByEmailAndPassword(password, email).equals("admin")) {
+                request.getRequestDispatcher("/admin/admin.html").forward(request, response);
+            } else {
+                System.out.println(email + " Он смог " + password);
 
-            HttpSession session = request.getSession(true);
-            session.setAttribute("authenticated", true);
+//            Cookie cookies = new Cookie("id", unUUID);
+//            response.addCookie(cookies);
+//            cookies.setMaxAge(3600 * 24);
+
 //            session.setAttribute("isAMainPage", true);
+                HttpSession session = request.getSession(true);
+                session.setAttribute("authenticated", true);
 
-            System.out.println("Он видит, что пользователь есть");
-            response.sendRedirect("/main_page");
+                System.out.println("Он видит, что пользователь есть");
+                response.sendRedirect("/main_page");
+                System.out.println("отпавил на главную страницу");
+            }
+
         } else {
             System.out.println(email + " Он не смог " + password);
             response.sendRedirect("/reg");

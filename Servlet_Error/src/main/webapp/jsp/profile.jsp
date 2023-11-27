@@ -1,4 +1,7 @@
-<%--
+<%@ page import="models.Record" %>
+<%@ page import="repository.UsersRepository" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.SimpleDateFormat" %><%--
   Created by IntelliJ IDEA.
   User: Ruslan
   Date: 21.11.2023
@@ -37,7 +40,6 @@
                 </div>
             </div>
         </div>
-
         <div class="profile-form__content">
             <div class="profile-img">
                 <div class="profile-img__avatar">
@@ -47,7 +49,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="profile-page__info">
                 <div class="profile-form__name__block">
                     <div class="profile-page__name">
@@ -66,7 +67,6 @@
                         <h1>Наспортные данные</h1>
                         <input type="text"  placeholder="Серия и номер паспорта">
                     </div>
-
                     <div class="save profile-page__name">
                         <a href="#" class="button" style="font-size: 30px; color: #405d87; text-decoration: none;">
                             <h3 style="margin-top: 20px">Сохранить</h3>
@@ -79,44 +79,20 @@
                 <h1 class="form-title">
                     Ваши записи к врачам
                 </h1>
-                <div class="form-fields">
-                    <div class="recorder-form-container__records">
-                        <h3 class="info_records">Эшмаматов Алмаз</h3>
-                        <h3 class="info_records">20.12.2023</h3>
-                        <h3 class="info_records">15:00</h3>
-                    </div>
+                    <div class="form-fields">
+                        <% List<models.Record> records = (List<Record>) request.getAttribute("records");
 
-                    <div class="recorder-form-container__records">
-                        <h3 class="info_records">Алтынбаев Руслан</h3>
-                        <h3 class="info_records">21.12.2023</h3>
-                        <h3 class="info_records">15:10</h3>
+                        for (Record record : records) { %>
+                        <div class="recorder-form-container__records">
+                            <h3 class="info_records"><%= record.getIdDoctor()%></h3>
+                            <h3 class="info_records"><%= record.getDate()%></h3>
+                            <h3 class="info_records"><%= record.getTime()%></h3>
+                        </div>
+                        <% } %>
                     </div>
-                    <div class="recorder-form-container__records">
-                        <h3 class="info_records">Нурмиева Аделина</h3>
-                        <h3 class="info_records">22.12.2023</h3>
-                        <h3 class="info_records">15:20</h3>
-                    </div>
-                    <div class="recorder-form-container__records">
-                        <h3 class="info_records">Алтынбаева Рамиля</h3>
-                        <h3 class="info_records">23.12.2023</h3>
-                        <h3 class="info_records">15:30</h3>
-                    </div>
-                    <div class="recorder-form-container__records">
-                        <h3 class="info_records">Нурмиев Рафаэль</h3>
-                        <h3 class="info_records">24.12.2023</h3>
-                        <h3 class="info_records">15:40</h3>
-                    </div>
-                </div>
-
             </div>
-
         </div>
-
-
-
-
     </div>
 </main>
 </body>
-
 </html>
