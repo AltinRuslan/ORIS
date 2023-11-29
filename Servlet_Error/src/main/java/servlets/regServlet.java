@@ -54,6 +54,7 @@ public class regServlet extends HttpServlet {
 
         try(Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             Statement statement = connection.createStatement();
+            String id = usersRepository.findUserByName(firstName);
             String unUUID = UUID.randomUUID().toString();
             String sqlInsertUser = "insert into driver(first_name, email, password, role)" +
                     " values ('" + firstName + "', '" + email + "', '" + password + "', '" + "User" + "');";
@@ -73,6 +74,7 @@ public class regServlet extends HttpServlet {
 
                 HttpSession session = request.getSession(true);
                 session.setAttribute("authenticated", true);
+                session.setAttribute("id", id);
 
                 cookies.setMaxAge(3600 * 24);
                 response.sendRedirect("/main_page");

@@ -193,23 +193,53 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
         }
     }
 
+
+    @Override
+    public String findUserByEmail(String email) {
+        String idUser = null;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DRIVER);
+            while (resultSet.next()) {
+                User user = User.builder()
+                        .id(resultSet.getString("id"))
+                        .name(resultSet.getString("first_name"))
+                        .email(resultSet.getString("email"))
+                        .build();
+                if (user.getEmail().equals(email)){
+                    idUser = user.getId();
+                }
+            }
+            return idUser;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
     @Override
     public List<Record> findAllRecords(String id) {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_RECORDS);
             List<Record> result = new ArrayList<>();
-
+            System.out.println("Вот передаваемый id: " + id);
 
             while (resultSet.next()) {
                 Record record = Record.builder()
+                        .idUser(resultSet.getString("id_user"))
                         .idDoctor(resultSet.getString("id_doctor"))
                         .date(resultSet.getString("date"))
                         .time(resultSet.getString("time"))
+                        .email(resultSet.getString("email"))
                         .build();
                 if (record.getIdUser().equals(id)) {
+                    System.out.println("id у них равные, будет добавлять");
                     result.add(record);
+                } else {
+                    System.out.println("id у них не равные, будет добавлять");
                 }
+            }
+            if (result.isEmpty()) {
+                System.out.println("По введенному возврасту ничего не найдено...");
             }
             return result;
         } catch (SQLException e) {
@@ -250,7 +280,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                         .password(resultSet.getString("password"))
                         .role(resultSet.getString("role"))
                         .build();
-                System.out.println(user.getRole());
                 if (user.getEmail().equals(email) && user.getPassword().equals(password)){
                     role = user.getRole();
                 }
@@ -260,6 +289,5 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             throw new IllegalStateException(e);
         }
     }
-
 
 }

@@ -58,7 +58,7 @@ public class autServlet extends HttpServlet {
                 request.getRequestDispatcher("/admin/admin.html").forward(request, response);
             } else {
                 System.out.println(email + " Он смог " + password);
-
+                String id = usersRepository.findUserByEmail(email);
 //            Cookie cookies = new Cookie("id", unUUID);
 //            response.addCookie(cookies);
 //            cookies.setMaxAge(3600 * 24);
@@ -66,6 +66,7 @@ public class autServlet extends HttpServlet {
 //            session.setAttribute("isAMainPage", true);
                 HttpSession session = request.getSession(true);
                 session.setAttribute("authenticated", true);
+                session.setAttribute("id", id);
 
                 System.out.println("Он видит, что пользователь есть");
                 response.sendRedirect("/main_page");

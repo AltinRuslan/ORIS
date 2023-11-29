@@ -55,14 +55,6 @@ public class recServlet extends HttpServlet {
             String userId = usersRepository.findUserByName(userName);
             String doctorId = usersRepository.findDoctorByName(doctorName);
 
-            System.out.println(userName);
-            System.out.println(doctorName);
-            System.out.println(date);
-            System.out.println(time);
-            System.out.println(email);
-            System.out.println(userId);
-            System.out.println(doctorId);
-
             if (doctorId != null) {
                 String sqlInsertAppointment = "INSERT INTO record (id_user, id_doctor, date, time, email) " +
                         "VALUES ('" + userId + "', " + doctorId + ", '" + date + "', '" + time + "', '" + email + "')";
@@ -70,7 +62,7 @@ public class recServlet extends HttpServlet {
 
                 statement.executeUpdate(sqlInsertAppointment);
 
-                response.sendRedirect("/main_page");
+                response.sendRedirect("/profile");
             } else {
                 response.getWriter().println("Врач с именем " + doctorName + " не найден.");
             }

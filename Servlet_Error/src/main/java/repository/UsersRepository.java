@@ -20,4 +20,6 @@ public interface UsersRepository extends CrudRepository<User> {
 
     String findDoctorById(String id);
     String findRoleByEmailAndPassword(String password, String email);
+
+    String findUserByEmail(String email);
 }

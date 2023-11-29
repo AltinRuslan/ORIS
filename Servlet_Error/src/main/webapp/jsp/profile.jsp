@@ -80,13 +80,13 @@
                     Ваши записи к врачам
                 </h1>
                     <div class="form-fields">
-                        <% List<models.Record> records = (List<Record>) request.getAttribute("records");
+                        <% List<Record> records = (List<Record>) request.getAttribute("recordsForJsp");
 
-                        for (Record record : records) { %>
+                        for ( int i = 0; i < records.size(); i++) { %>
                         <div class="recorder-form-container__records">
-                            <h3 class="info_records"><%= record.getIdDoctor()%></h3>
-                            <h3 class="info_records"><%= record.getDate()%></h3>
-                            <h3 class="info_records"><%= record.getTime()%></h3>
+                            <h3 class="info_records"><%= records.get(i).getIdDoctor()%></h3>
+                            <h3 class="info_records"><%= records.get(i).getDate()%></h3>
+                            <h3 class="info_records"><%= records.get(i).getTime()%></h3>
                         </div>
                         <% } %>
                     </div>

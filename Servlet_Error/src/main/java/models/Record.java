@@ -15,4 +15,5 @@ public class Record {
     private String date;
     private String time;
     private String email;
+    private String id;
 }
