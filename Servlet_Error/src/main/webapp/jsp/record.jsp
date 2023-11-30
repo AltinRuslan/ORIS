@@ -41,6 +41,7 @@
 
     <div class="main__recorder-page">
       <div class="recorder-page">
+        <h4 style="color: red">Если вы хотели записаться и в профиле запись не появилась, то время и дата заняты</h4>
         <form action="/rec" method="post">
           <input class="profile-page__name" type="text" name="userName" placeholder="ФИО пациента" style="color: black;">
           <div class="doctors profile-page__name">
@@ -58,7 +59,7 @@
 
         <div class="save profile-page__name">
           <a href="#" class="button" style="font-size: 30px; color: #405d87; text-decoration: none;">
-            <input style="margin-top: 20px" class="button" type="submit" value="Send" placeholder="Записаться">
+            <input style="margin-top: 20px; color: black" class="button" type="submit" value="Send" placeholder="Записаться">
           </a>
         </div>
         </form>

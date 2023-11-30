@@ -30,7 +30,7 @@
                     <h4><a href="/main_page" class="profile-button__used">Главная страница</a></h4>
                 </div>
                 <div class="profile-container__listOfDoctors profile-button">
-                    <h4><a href="../jsp/profile.jsp" class="profile-button__used">Профиль</a></h4>
+                    <h4><a href="/profile" class="profile-button__used">Профиль</a></h4>
                 </div>
                 <div class="profile-container__exit profile-button">
                     <h4><a href="/reg" class="profile-button__used">Выход</a></h4>

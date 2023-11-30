@@ -52,6 +52,26 @@ public class RecordRepositoryJdbcImpl implements RecordRepository{
     }
 
     @Override
+    public boolean timeIsExist(String date, String time) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_RECORDS);
+            while (resultSet.next()) {
+                Record record = Record.builder()
+                        .date(resultSet.getString("date"))
+                        .time(resultSet.getString("time"))
+                        .build();
+                if (record.getTime().equals(time) && record.getDate().equals(date)){
+                    return false;
+                }
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Override
     public void save(Record entity) {
 
     }

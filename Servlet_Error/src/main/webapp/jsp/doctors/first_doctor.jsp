@@ -33,7 +33,7 @@
           <h4><a href="../doctors.jsp" class="profile-button__used">Список врачей</a></h4>
         </div>
         <div class="profile-container__exit profile-button">
-          <h4><a href="../profile.jsp" class="profile-button__used">Профиль</a></h4>
+          <h4><a href="/profile" class="profile-button__used">Профиль</a></h4>
         </div>
       </div>
     </div>

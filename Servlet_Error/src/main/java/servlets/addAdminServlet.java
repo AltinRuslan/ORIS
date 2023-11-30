@@ -18,7 +18,6 @@ public class addAdminServlet extends HttpServlet {
     private static final String DB_USER = "postgres";
     private static final String DB_PASSWORD = "adidas19375";
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/db_users_oris";
-
     private UsersRepository usersRepository;
 
     @Override
@@ -28,7 +27,6 @@ public class addAdminServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             Statement statement = connection.createStatement();
@@ -37,7 +35,6 @@ public class addAdminServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("fullName");
@@ -52,17 +49,4 @@ public class addAdminServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
-//    private boolean checkUserExists(String name, String email) {
-//        boolean userExist = false;
-//        try(Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-//            Statement statement = connection.createStatement();
-//            String sqlAddAdmin = "SELECT * FROM driver WHERE first_name = ? AND email = ?";
-//            try
-//
-//            int affectedRows = statement.executeUpdate(sqlAddAdmin);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 }

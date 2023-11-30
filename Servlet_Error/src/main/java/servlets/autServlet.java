@@ -26,7 +26,6 @@ public class autServlet extends HttpServlet {
     private static final String DB_USER = "postgres";
     private static final String DB_PASSWORD = "adidas19375";
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/db_users_oris";
-
     private UsersRepository usersRepository;
     private RoleRepository roleRepository;
 
@@ -37,7 +36,6 @@ public class autServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             Statement statement = connection.createStatement();
@@ -53,9 +51,6 @@ public class autServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         System.out.println(email);
-//        String unUUID = UUID.randomUUID().toString();
-
-        
 
         if(usersRepository.findUser(email, password)) {
             if (roleRepository.findRoleByEmailAndPassword(password, email).equals("admin")) {
@@ -63,11 +58,6 @@ public class autServlet extends HttpServlet {
             } else {
                 System.out.println(email + " Он смог " + password);
                 String id = usersRepository.findUserByEmail(email);
-//            Cookie cookies = new Cookie("id", unUUID);
-//            response.addCookie(cookies);
-//            cookies.setMaxAge(3600 * 24);
-
-//            session.setAttribute("isAMainPage", true);
                 HttpSession session = request.getSession(true);
                 session.setAttribute("authenticated", true);
                 session.setAttribute("id", id);
@@ -76,7 +66,6 @@ public class autServlet extends HttpServlet {
                 response.sendRedirect("/main_page");
                 System.out.println("отпавил на главную страницу");
             }
-
         } else {
             System.out.println(email + " Он не смог " + password);
             response.sendRedirect("/reg");
