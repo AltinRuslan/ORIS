@@ -18,6 +18,9 @@ public class regServlet extends HttpServlet {
     private static final String DB_USER = "postgres";
     private static final String DB_PASSWORD = "adidas19375";
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/db_users_oris";
+    private static final String SQL_INSERT_INTO_TO_DRIVER = "INSERT INTO driver (first_name, email, password, role) VALUES (?, ?, ?, ?)";
+    private static final String SQL_INSERT_INTO_TO_UUID = "INSERT INTO uuid (uuid) VALUES (?)";
+
     private static final java.util.UUID  UUID = null;
 
     private UsersRepository usersRepository;
@@ -56,30 +59,36 @@ public class regServlet extends HttpServlet {
             Statement statement = connection.createStatement();
             String id = usersRepository.findUserByName(firstName);
             String unUUID = UUID.randomUUID().toString();
-            String sqlInsertUser = "insert into driver(first_name, email, password, role)" +
-                    " values ('" + firstName + "', '" + email + "', '" + password + "', '" + "User" + "');";
-//            System.out.println(sqlInsertUser);
-            int affectedRows = statement.executeUpdate(sqlInsertUser);
 
-            PrintWriter printWriter = response.getWriter();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_INTO_TO_DRIVER)){
+                preparedStatement.setString(1, firstName);
+                preparedStatement.setString(2, email);
+                preparedStatement.setString(3, password);
+                preparedStatement.setString(4, "User");
 
-            if(affectedRows > 0 && !password.isEmpty() && !firstName.isEmpty() && !email.isEmpty() && password.equals(lastPassword)) {
+                int affectedRows = preparedStatement.executeUpdate();
 
-                Cookie cookies = new Cookie("id", unUUID);
-                response.addCookie(cookies);
+                PrintWriter printWriter = response.getWriter();
 
-                String sqlInsertUserUUID = "insert into uuid(uuid)" +
-                        " values ('" + unUUID + "');";
-                statement.executeUpdate(sqlInsertUserUUID);
+                if(affectedRows > 0 && !password.isEmpty() && !firstName.isEmpty() && !email.isEmpty() && password.equals(lastPassword)) {
 
-                HttpSession session = request.getSession(true);
-                session.setAttribute("authenticated", true);
-                session.setAttribute("id", id);
+                    Cookie cookies = new Cookie("id", unUUID);
+                    response.addCookie(cookies);
 
-                cookies.setMaxAge(3600 * 24);
-                response.sendRedirect("/main_page");
-            } else {
-                printWriter.println("<h1>reg failed</h1>");
+                    try (PreparedStatement uuidStatement = connection.prepareStatement(SQL_INSERT_INTO_TO_UUID)){
+                        uuidStatement.setString(1, unUUID);
+                        uuidStatement.executeUpdate();
+                    }
+
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("authenticated", true);
+                    session.setAttribute("id", id);
+
+                    cookies.setMaxAge(3600 * 24);
+                    response.sendRedirect("/main_page");
+                } else {
+                    printWriter.println("<h1>reg failed</h1>");
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

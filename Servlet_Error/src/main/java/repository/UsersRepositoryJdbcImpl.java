@@ -21,7 +21,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
     private static final String SQL_SELECT_ALL_FROM_DRIVER = "select * from driver";
     private static final String SQL_SELECT_ALL_FROM_UUID = "select * from uuid";
-    private static final String SQL_SELECT_ALL_FROM_DOCTORS = "select * from doctors";
 
 
     public UsersRepositoryJdbcImpl(Connection connection) {
