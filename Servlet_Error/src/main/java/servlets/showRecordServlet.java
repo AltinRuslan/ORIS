@@ -1,6 +1,8 @@
 package servlets;
 
 import models.Record;
+import repository.RecordRepository;
+import repository.RecordRepositoryJdbcImpl;
 import repository.UsersRepository;
 import repository.UsersRepositoryJdbcImpl;
 
@@ -25,7 +27,7 @@ public class showRecordServlet extends HttpServlet {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/db_users_oris";
     private static final java.util.UUID  UUID = null;
 
-    private UsersRepository usersRepository;
+    private RecordRepository recordRepository;
 
 
     @Override
@@ -39,7 +41,7 @@ public class showRecordServlet extends HttpServlet {
         try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            usersRepository = new UsersRepositoryJdbcImpl(connection);
+            recordRepository = new RecordRepositoryJdbcImpl(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -53,8 +55,7 @@ public class showRecordServlet extends HttpServlet {
         if (session.getAttribute("id") != null) {
             String isId = (String) session.getAttribute("id");
             System.out.println("в servlet зашел и увидел id " + isId);
-            List result = usersRepository.findAllRecords(isId);
-
+            List result = recordRepository.findAllRecords(isId);
 
             if (!result.isEmpty()) {
                 System.out.println("Он нашел записи");

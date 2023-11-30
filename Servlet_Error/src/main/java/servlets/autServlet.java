@@ -1,5 +1,7 @@
 package servlets;
 
+import repository.RoleRepository;
+import repository.RoleRepositoryJdbcImpl;
 import repository.UsersRepository;
 import repository.UsersRepositoryJdbcImpl;
 
@@ -26,6 +28,7 @@ public class autServlet extends HttpServlet {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/db_users_oris";
 
     private UsersRepository usersRepository;
+    private RoleRepository roleRepository;
 
     @Override
     public void init() throws ServletException {
@@ -39,6 +42,7 @@ public class autServlet extends HttpServlet {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             Statement statement = connection.createStatement();
             usersRepository = new UsersRepositoryJdbcImpl(connection);
+            roleRepository = new RoleRepositoryJdbcImpl(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -54,7 +58,7 @@ public class autServlet extends HttpServlet {
         
 
         if(usersRepository.findUser(email, password)) {
-            if (usersRepository.findRoleByEmailAndPassword(password, email).equals("admin")) {
+            if (roleRepository.findRoleByEmailAndPassword(password, email).equals("admin")) {
                 request.getRequestDispatcher("/admin/admin.html").forward(request, response);
             } else {
                 System.out.println(email + " Он смог " + password);

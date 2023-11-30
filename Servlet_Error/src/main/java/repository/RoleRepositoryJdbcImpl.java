@@ -1,37 +1,28 @@
 package repository;
 
-
-
-
-import models.Doctor;
-import models.Record;
 import models.User;
 
-import javax.print.Doc;
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
-
-public class UsersRepositoryJdbcImpl implements UsersRepository {
-
+public class RoleRepositoryJdbcImpl implements RoleRepository{
     private Connection connection;
-
-    private Statement statement;
-
     private static final String SQL_SELECT_ALL_FROM_DRIVER = "select * from driver";
     private static final String SQL_SELECT_ALL_FROM_UUID = "select * from uuid";
-    private static final String SQL_SELECT_ALL_FROM_DOCTORS = "select * from doctors";
 
-
-    public UsersRepositoryJdbcImpl(Connection connection) {
+    public RoleRepositoryJdbcImpl(Connection connection) {
 //        this.statement = statement;
         this.connection = connection;
     }
+
     @Override
     public void save(User entity) {
 
     }
+
     @Override
     public List<User> findAll() {
         return null;
@@ -59,22 +50,22 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
     @Override
     public boolean findByLogin(String email) {
-            try {
-               Statement statement = connection.createStatement();
-               ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DRIVER);
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DRIVER);
 
-               while (resultSet.next()) {
-                   User user = User.builder()
-                           .email(resultSet.getString("email"))
-                           .build();
-                   if (user.getEmail().equals(email)) {
-                       return true;
-                   }
-               }
-               return false;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            while (resultSet.next()) {
+                User user = User.builder()
+                        .email(resultSet.getString("email"))
+                        .build();
+                if (user.getEmail().equals(email)) {
+                    return true;
+                }
             }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -116,83 +107,25 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
         }
     }
 
-
     @Override
-    public List findAllByAge(int num) {
-        return null;
-    }
-
-    @Override
-    public List allUsers() {
+    public String findRoleByEmailAndPassword(String password, String email) {
+        String role = null;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DRIVER);
-            System.out.println(resultSet);
-            List<User> result = new ArrayList<>();
-
-
             while (resultSet.next()) {
                 User user = User.builder()
-                        .name(resultSet.getString("first_name"))
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
+                        .role(resultSet.getString("role"))
                         .build();
-                result.add(user);
-                System.out.println(user.getName());
-                if (result.isEmpty()) {
-                    System.out.println("Пользователь не найден");
+                if (user.getEmail().equals(email) && user.getPassword().equals(password)){
+                    role = user.getRole();
                 }
             }
-            return result;
+            return role;
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
     }
-
-    @Override
-    public String findUserByName(String name) {
-        String idUser = null;
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DRIVER);
-            while (resultSet.next()) {
-                User user = User.builder()
-                        .id(resultSet.getString("id"))
-                        .name(resultSet.getString("first_name"))
-                        .build();
-                if (user.getName().equals(name)){
-                    idUser = user.getId();
-                }
-            }
-            return idUser;
-        } catch (SQLException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-
-    @Override
-    public String findUserByEmail(String email) {
-        String idUser = null;
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_DRIVER);
-            while (resultSet.next()) {
-                User user = User.builder()
-                        .id(resultSet.getString("id"))
-                        .name(resultSet.getString("first_name"))
-                        .email(resultSet.getString("email"))
-                        .build();
-                if (user.getEmail().equals(email)){
-                    idUser = user.getId();
-                }
-            }
-            return idUser;
-        } catch (SQLException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-
-
 }

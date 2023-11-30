@@ -1,5 +1,7 @@
 package servlets;
 
+import repository.DoctorRepository;
+import repository.DoctorRepositoryJdbcImpl;
 import repository.UsersRepository;
 import repository.UsersRepositoryJdbcImpl;
 
@@ -22,8 +24,10 @@ public class recServlet extends HttpServlet {
     private static final String DB_PASSWORD = "adidas19375";
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/db_users_oris";
     private static final java.util.UUID  UUID = null;
+    
 
     private UsersRepository usersRepository;
+    private DoctorRepository doctorRepository;
 
 
     @Override
@@ -38,6 +42,7 @@ public class recServlet extends HttpServlet {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             Statement statement = connection.createStatement();
             usersRepository = new UsersRepositoryJdbcImpl(connection);
+            doctorRepository = new DoctorRepositoryJdbcImpl(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +58,7 @@ public class recServlet extends HttpServlet {
             String email = request.getParameter("email");
 
             String userId = usersRepository.findUserByName(userName);
-            String doctorId = usersRepository.findDoctorByName(doctorName);
+            String doctorId = doctorRepository.findDoctorByName(doctorName);
 
             if (doctorId != null) {
                 String sqlInsertAppointment = "INSERT INTO record (id_user, id_doctor, date, time, email) " +
